@@ -336,5 +336,10 @@
   ("plat-eco.o" "plat-eco")
   ("ropebridge.o" "ropebridge")
   ("ticky.o" "ticky")
+  ("flut-part.o" "flut-part")
+  ("flutflut.o" "flutflut")
+  ("target-flut.o" "target-flut")
+  ("flut-saddle-ag.go" "flut-saddle")
+  ("eichar-flut+0-ag.go" "eichar-flut+0")
   ("hud-classes-pc.o" "hud-classes-pc") ;; added
   )
