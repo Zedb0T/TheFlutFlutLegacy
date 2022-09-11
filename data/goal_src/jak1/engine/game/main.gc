@@ -103,7 +103,8 @@
 (defun movie? ()
 
 (set! flutflut? (aif *target* (case (-> it next-state name) (
-                                      ('target-flut-air-attack
+                                      (
+                                       'target-flut-air-attack
                                        'target-flut-air-attack-hit-ground
                                        'target-flut-clone-anim
                                        'target-flut-death
