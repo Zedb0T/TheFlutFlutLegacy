@@ -137,7 +137,7 @@
                                        'target-duck-high-jump-jump
                                        'target-hit-ground) #t))))
 
-(if (not flutflut?) (send-event *target* 'change-mode 'flut #f))
+(if (and (not flutflut?) (not (and (logtest? (-> *kernel-context* prevent-from-run) (process-mask movie)) (or (= (-> *target* current-level name) 'jungle)(= (-> *target* current-level name) 'village1) )))) (send-event *target* 'change-mode 'flut #f))
 
   "Are we in a movie?"
   (logtest? (-> *kernel-context* prevent-from-run) (process-mask movie))
