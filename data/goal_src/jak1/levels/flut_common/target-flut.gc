@@ -344,7 +344,7 @@
             )
  
             
-           (('fishing 'billy 'look-around)  ;; handles changing to look-around, fish game, rats game, periscopes, etc
+           (('fishing 'billy 'look-around 'periscope)  ;; handles changing to look-around, fish game, rats game, periscopes, etc
             (target-standard-event-handler arg0 arg1 arg2 arg3)
             )
            )
