@@ -276,18 +276,20 @@
   )
 
 (defbehavior target-flut-standard-event-handler target ((arg0 process) (arg1 int) (arg2 symbol) (arg3 event-message-block))
-         
-       (if (or (and (= (-> *target* current-level name) 'firecanyon) (>= (the int (-> *game-info* fuel)) 20)) (and(= (-> *target* current-level name) 'lavatube)(>= (the int (-> *game-info* fuel)) 72))(string= (-> (-> *game-info* current-continue) name)"ogre-race"))
-       (begin(set! (-> *flut-walk-mods* target-speed) (* 2.0 81920.0))
-       (set! (-> *flut-walk-mods* fric) 0.001))
-       (if (=(-> *flut-walk-mods* target-speed) (* 2.0 81920.0))
-       (begin
-       (set! (-> *flut-walk-mods* target-speed) 81920.0))
-       (set! (-> *flut-walk-mods* fric) 1.0))
-       )
-       
+  (cond 
+    ((or 
+        (and (= (-> *target* current-level name) 'firecanyon) (>= (the int (-> *game-info* fuel)) 20)) 
+        (and(= (-> *target* current-level name) 'lavatube)(>= (the int (-> *game-info* fuel)) 72))
+        (string= (-> (-> *game-info* current-continue) name)"ogre-race"))
+     (set! (-> *flut-walk-mods* target-speed) (* 2.0 81920.0))
+     (set! (-> *flut-walk-mods* fric) 0.001)
+     )
+    ((= (-> *flut-walk-mods* target-speed) (* 2.0 81920.0))
+     (set! (-> *flut-walk-mods* target-speed) 81920.0)
+     (set! (-> *flut-walk-mods* fric) 1.0)
+     )
+    )
 
-       
   (cond
     ((and (= arg2 'query) (= (-> arg3 param 0) 'mode))
      'flut
@@ -302,7 +304,7 @@
            arg2
            (the-as attack-info (-> arg3 param 1))
            arg0
-           (the-as process (-> arg3 param 0))
+           (the-as touching-shapes-entry (-> arg3 param 0))
            target-flut-hit
            )
          )
@@ -316,11 +318,6 @@
            (go target-flut-hit 'shove (-> self attack-info-rec))
            )
          )
-             (('launch)
-            ;; handles changing to look-around, fish game, rats game, periscopes, etc
-            (target-standard-event-handler arg0 arg1 arg2 arg3)
-            
-     )
         (('falling)
          (if #t
              (go target-flut-falling #f)
@@ -354,9 +351,7 @@
            (('grab)
             (go target-flut-grab)
             )
- 
-            
-           (('fishing 'billy 'look-around 'periscope)  ;; handles changing to look-around, fish game, rats game, periscopes, etc
+           (else  ;; handles changing to look-around, fish game, rats game, periscopes, etc
             (target-standard-event-handler arg0 arg1 arg2 arg3)
             )
            )
@@ -393,7 +388,7 @@
          (target-send-attack
            arg0
            (the-as uint (-> self control unknown-symbol30))
-           (-> arg3 param 0)
+           (the-as touching-shapes-entry (-> arg3 param 0))
            (-> self control unknown-dword50)
            (-> self control unknown-dword51)
            )
@@ -405,7 +400,7 @@
        arg2
        (the-as attack-info (-> arg3 param 1))
        arg0
-       (the-as process (-> arg3 param 0))
+       (the-as touching-shapes-entry (-> arg3 param 0))
        target-flut-hit
        )
      )
@@ -806,7 +801,7 @@
       (when (target-send-attack
               arg0
               (the-as uint 'flut-bonk)
-              (-> arg3 param 0)
+              (the-as touching-shapes-entry (-> arg3 param 0))
               (-> self control unknown-dword50)
               (-> self control unknown-dword51)
               )
@@ -1247,7 +1242,7 @@
           (let ((gp-1 (target-send-attack
                         arg0
                         (the-as uint (-> self control unknown-symbol30))
-                        (-> arg3 param 0)
+                        (the-as touching-shapes-entry (-> arg3 param 0))
                         (-> self control unknown-dword50)
                         (-> self control unknown-dword51)
                         )
