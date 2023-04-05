@@ -232,7 +232,7 @@
     :visname 'beach-vis
     :nickname 'bea
     :packages '(beach)
-    :sound-banks '(beach snow)
+    :sound-banks '(beach)
     :music-bank 'beach
     :ambient-sounds '()
     :mood '*beach-mood*
